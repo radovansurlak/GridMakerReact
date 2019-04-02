@@ -47,6 +47,7 @@ class App extends Component {
     this.updateGrid = this.updateGrid.bind(this);
     this.trainBrain = this.trainBrain.bind(this);
     this.testBrain = this.testBrain.bind(this);
+    this.resetGrid = this.resetGrid.bind(this);
   }
 
   updateGrid(index) {
@@ -65,9 +66,13 @@ class App extends Component {
 
   trainBrain() {
     let output = this.state.symmetrical === true ? 1 : 0;
-    let trainingIteration = net.train([{input: this.state.grid, output: [output]}]);
+    let trainingIteration = net.train([{input: this.state.grid, output: {symmetrical: output}}]);
     console.log(trainingIteration)
     console.log(this.state.symmetrical)
+  }
+
+  resetGrid() {
+    this.setState({grid: Array(Math.pow(GRID_SIZE,2)).fill(0)})
   }
    
 
@@ -88,6 +93,7 @@ class App extends Component {
         <br/>
         <button onClick={() => this.trainBrain()}>Train network</button>
         <button onClick={() => this.testBrain()}>Test network</button>
+        <button onClick={() => this.resetGrid()}>Reset grid</button>
       </main>
     );
   }
