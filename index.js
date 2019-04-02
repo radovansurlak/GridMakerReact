@@ -31,14 +31,19 @@ const asymmetricalPatters = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0],
-
+  [1,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+  [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0],
+  [0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 ]
 
 symmetricalPatterns.forEach(pattern => {
   console.log(net.train({input: pattern, output: [1]}))
 })
 
-const output = net.run([1, 0]);  // [0.987]
+asymmetricalPatters.forEach(pattern => {
+  console.log(net.train({input: pattern, output: [0]}))
+})
 
 class App extends Component {
   constructor() {
