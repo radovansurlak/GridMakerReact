@@ -9,7 +9,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      grid: Array(Math.pow(GRID_SIZE,2)).fill(0)
+      grid: Array(Math.pow(GRID_SIZE,2)).fill(0),
+      ordered: false,
     }
     this.updateGrid = this.updateGrid.bind(this);
   }
@@ -34,6 +35,7 @@ class App extends Component {
       <div class="grid-container">
         {boxes}
         <p>{JSON.stringify(this.state.grid)}</p>
+        <input type="checkbox" checked={this.state.ordered} onClick={() => this.setState({ordered: !this.state.ordered})}></input>
       </div>
     );
   }
