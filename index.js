@@ -3,13 +3,13 @@ import { render } from 'react-dom';
 import Box from './Box';
 import './style.css';
 
-const gridSize = 14;
+const GRID_SIZE = 5;
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      grid: Array(Math.pow(gridSize,2)).fill(0)
+      grid: Array(Math.pow(GRID_SIZE,2)).fill(0)
     }
     this.updateGrid = this.updateGrid.bind(this);
   }
@@ -33,6 +33,7 @@ class App extends Component {
     return (
       <div class="grid-container">
         {boxes}
+        <p>{JSON.stringify(this.state.grid)}</p>
       </div>
     );
   }
