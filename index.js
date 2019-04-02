@@ -7,15 +7,25 @@ import brain from 'brain.js';
 
 const GRID_SIZE = 5;
 
+const net = new brain.NeuralNetwork();
+
+net.train([{input: [0, 0], output: [0]},
+           {input: [0, 1], output: [1]},
+           {input: [1, 0], output: [1]},
+           {input: [1, 1], output: [0]}]);
+
+const output = net.run([1, 0]);  // [0.987]
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       grid: Array(Math.pow(GRID_SIZE,2)).fill(0),
-      ordered: false,
+      symmetrical: false,
     }
     this.updateGrid = this.updateGrid.bind(this);
     this.trainBrain = this.trainBrain.bind(this);
+    this.testBrain = this.testBrain.bind(this);
   }
 
   updateGrid(index) {
@@ -24,8 +34,15 @@ class App extends Component {
     console.log(this.state.grid)
   }
 
+  testBrain() {
+    const output = net.run(this.state.grid);
+    console.log(output)
+  }
+
   trainBrain() {
-    alert('training the brain');
+    let output = this.state.symmetrical === true ? 1 : 0;
+    let trainingIteration = net.train([{input: this.state.grid, output: [output]}]);
+    console.log(trainingIteration)
   }
    
 
@@ -43,21 +60,15 @@ class App extends Component {
           {boxes}
         </div>
         <p>{JSON.stringify(this.state.grid)}</p>
-        <label for="ordered-checkbox">Ordered</label><input type="checkbox" id="ordered-checkbox" checked={this.state.ordered} onClick={() => this.setState({ordered: !this.state.ordered})}></input>
+        <label for="symmetrical-checkbox">symmetrical</label><input type="checkbox" id="symmetrical-checkbox" checked={this.state.symmetrical} onClick={() => this.setState({symmetrical: !this.state.symmetrical})}></input>
         <br/>
         <button onClick={() => this.trainBrain()}>Train network</button>
+        <button onClick={() => this.testBrain()}>Test network</button>
       </main>
     );
   }
 }
 
-const net = new brain.NeuralNetwork();
 
-net.train([{input: [0, 0], output: [0]},
-           {input: [0, 1], output: [1]},
-           {input: [1, 0], output: [1]},
-           {input: [1, 1], output: [0]}]);
-
-const output = net.run([1, 0]);  // [0.987]
 
 render(<App />, document.getElementById('root'));
